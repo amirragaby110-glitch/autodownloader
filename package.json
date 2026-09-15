@@ -1,0 +1,17 @@
+{
+  "name": "autodownloader",
+  "version": "1.0.0",
+  "description": "Modern web-based multi-connection auto downloader (aria2/IDM-style accelerator) — zero dependencies, pure Node.js",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node test/run.mjs"
+  },
+  "engines": {
+    "node": ">=18.11"
+  },
+  "keywords": ["downloader", "multi-connection", "http", "range", "accelerator", "web"],
+  "license": "MIT"
+}
