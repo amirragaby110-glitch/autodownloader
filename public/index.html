@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دانلودر خودکار ⚡ AutoDownloader</title>
+  <meta name="description" content="دانلودر خودکار تحت وب با موتور چنداتصاله — سریع‌تر از همیشه" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M17 2 6 18h7l-2 12L24 13h-8z'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <!-- ═══════════ Top bar ═══════════ -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/>
+        </linearGradient></defs>
+        <path fill="url(#lg)" d="M17 2 6 18h7l-2 12L24 13h-8z"/>
+      </svg>
+      <div class="brand-text">
+        <h1>دانلودر خودکار</h1>
+        <span class="tagline">موتور چنداتصاله · تا ۳۲ برابر سریع‌تر</span>
+      </div>
+      <span class="ver" dir="ltr">v1.0</span>
+    </div>
+
+    <div class="hud" id="hud" dir="ltr">
+      <svg id="spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/>
+        </linearGradient></defs>
+        <polyline id="sparkline" fill="none" stroke="url(#sg)" stroke-width="2" stroke-linejoin="round" points=""/>
+      </svg>
+      <div class="hud-item"><b id="hudSpeed">۰</b><span>MB/s</span></div>
+      <div class="hud-sep"></div>
+      <div class="hud-item"><b id="hudActive">۰</b><span>فعال</span></div>
+      <div class="hud-item"><b id="hudQueue">۰</b><span>صف</span></div>
+      <div class="hud-item"><b id="hudDone">۰</b><span>کامل</span></div>
+    </div>
+
+    <button class="btn ghost" id="btnSettings" title="تنظیمات کلی">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      <span>تنظیمات</span>
+    </button>
+  </header>
+
+  <main class="wrap">
+    <!-- ═══════════ Add panel ═══════════ -->
+    <section class="add-panel glass" id="addPanel">
+      <div class="add-row">
+        <svg class="link-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <textarea id="urlInput" rows="1" spellcheck="false" dir="ltr"
+          placeholder="لینک فایل را بچسبانید… (چند لینک = هر خط یک لینک) — Ctrl+V"></textarea>
+        <button class="btn ghost sq" id="btnProbe" title="بررسی لینک (اندازه و پشتیبانی از دانلود سریع)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      </div>
+      <div id="probeResult" class="probe-result" hidden></div>
+
+      <div class="add-actions">
+        <button class="btn ghost" id="btnToggleOptions">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>
+          <span>تنظیمات دانلود</span>
+        </button>
+        <span class="spacer"></span>
+        <button class="btn primary" id="btnAdd">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+          <span>شروع دانلود</span>
+        </button>
+      </div>
+
+      <!-- per-download options -->
+      <form class="options" id="optionsPanel" hidden>
+        <div class="opt">
+          <label for="optConnections">تعداد اتصال‌های موازی</label>
+          <div class="range-row">
+            <input type="range" id="optConnections" min="1" max="32" step="1" value="8" />
+            <output id="optConnectionsVal" dir="ltr">8</output>
+          </div>
+          <p class="hint">اتصال بیشتر = سرعت بیشتر (اگر سرور اجازه دهد)</p>
+        </div>
+        <div class="opt">
+          <label for="optSpeed">محدودیت سرعت</label>
+          <select id="optSpeed">
+            <option value="0" selected>بدون محدودیت</option>
+            <option value="262144">۲۵۶ KB/s</option>
+            <option value="524288">۵۱۲ KB/s</option>
+            <option value="1048576">۱ MB/s</option>
+            <option value="2097152">۲ MB/s</option>
+            <option value="5242880">۵ MB/s</option>
+            <option value="10485760">۱۰ MB/s</option>
+            <option value="20971520">۲۰ MB/s</option>
+          </select>
+        </div>
+        <div class="opt">
+          <label for="optRetries">تلاش مجدد</label>
+          <input type="number" id="optRetries" min="0" max="20" value="5" />
+        </div>
+        <div class="opt">
+          <label for="optFilename">نام فایل <small>(اختیاری — فقط برای یک لینک)</small></label>
+          <input type="text" id="optFilename" dir="ltr" placeholder="مثلاً ubuntu.iso" />
+        </div>
+        <div class="opt wide">
+          <label>پوشه ذخیره</label>
+          <div class="dir-row">
+            <input type="text" id="optDir" dir="ltr" readonly />
+            <button type="button" class="btn ghost" id="btnBrowseDir">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              انتخاب پوشه
+            </button>
+          </div>
+        </div>
+        <details class="opt wide advanced">
+          <summary>تنظیمات حرفه‌ای (User-Agent / Referer)</summary>
+          <div class="adv-grid">
+            <div>
+              <label for="optUA">User-Agent</label>
+              <input type="text" id="optUA" dir="ltr" placeholder="Mozilla/5.0 …" />
+            </div>
+            <div>
+              <label for="optReferer">Referer</label>
+              <input type="text" id="optReferer" dir="ltr" placeholder="https://example.com/page" />
+            </div>
+          </div>
+        </details>
+      </form>
+    </section>
+
+    <!-- ═══════════ Job list ═══════════ -->
+    <section class="jobs" id="jobList" aria-live="polite"></section>
+
+    <div class="empty" id="emptyState">
+      <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".55">
+        <path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      </svg>
+      <h2>هنوز دانلودی ندارید</h2>
+      <p>لینک فایل را در کادر بالا بچسبانید و «شروع دانلود» را بزنید.<br/>دانلودر خودکار با چند اتصال موازی، حداکثر سرعت ممکن را می‌گیرد.</p>
+    </div>
+  </main>
+
+  <!-- ═══════════ Settings dialog ═══════════ -->
+  <dialog id="settingsDlg" class="dlg">
+    <div class="dlg-head">
+      <h2>تنظیمات کلی</h2>
+      <button class="btn ghost sq" data-close title="بستن">✕</button>
+    </div>
+    <form method="dialog" id="settingsForm" class="dlg-body">
+      <div class="opt wide">
+        <label>پوشه پیش‌فرض ذخیره‌ی دانلودها</label>
+        <div class="dir-row">
+          <input type="text" id="setDir" dir="ltr" readonly />
+          <button type="button" class="btn ghost" id="btnBrowseSetDir">انتخاب پوشه</button>
+        </div>
+      </div>
+      <div class="opt">
+        <label for="setMaxConcurrent">حداکثر دانلود همزمان</label>
+        <input type="number" id="setMaxConcurrent" min="1" max="16" />
+      </div>
+      <div class="opt">
+        <label for="setConnections">تعداد اتصال پیش‌فرض</label>
+        <input type="number" id="setConnections" min="1" max="32" />
+      </div>
+      <div class="opt">
+        <label for="setRetries">تلاش مجدد پیش‌فرض</label>
+        <input type="number" id="setRetries" min="0" max="20" />
+      </div>
+      <div class="opt wide">
+        <label class="switch-row">
+          <span class="switch"><input type="checkbox" id="setAutoStart" /><i></i></span>
+          <span>شروع خودکار دانلودهای در صف</span>
+        </label>
+        <label class="switch-row">
+          <span class="switch"><input type="checkbox" id="setValidate" /><i></i></span>
+          <span>بررسی یکپارچگی هنگام ادامه‌ی دانلود (ETag)</span>
+        </label>
+      </div>
+    </form>
+    <div class="dlg-foot">
+      <button class="btn ghost" data-close>انصراف</button>
+      <button class="btn primary" id="btnSaveSettings">ذخیره تنظیمات</button>
+    </div>
+  </dialog>
+
+  <!-- ═══════════ Folder browser dialog ═══════════ -->
+  <dialog id="fsDlg" class="dlg">
+    <div class="dlg-head">
+      <h2>انتخاب پوشه ذخیره</h2>
+      <button class="btn ghost sq" data-close title="بستن">✕</button>
+    </div>
+    <div class="dlg-body">
+      <div class="crumbs" id="fsCrumbs" dir="ltr"></div>
+      <div class="fs-list" id="fsList"></div>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn ghost" id="btnMkdir">＋ پوشه جدید</button>
+      <span class="spacer"></span>
+      <button class="btn ghost" data-close>انصراف</button>
+      <button class="btn primary" id="btnPickDir">ذخیره در این پوشه</button>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# native build artifacts (binaries rebuilt from source)
+native/autodl
+native/autodl-dbg
+native/pe/tmp/
