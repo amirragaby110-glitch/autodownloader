@@ -1,5 +1,4 @@
-node_modules/
-data/
-downloads/
-*.log
-.DS_Store
+# native build artifacts (binaries rebuilt from source)
+native/autodl
+native/autodl-dbg
+native/pe/tmp/
